@@ -5,6 +5,7 @@ const led = new mraa.Gpio(7);
 
 const ID = 1;
 
+//const host = '192.168.11.2';
 const host = '192.168.0.11';
 const port = 12345;
 
@@ -21,7 +22,7 @@ sok.connect(port, host, () => {
 
 sok.on('data', (data) => {
 	console.log('GOT data: blink!');
-	blinkLed();
+	gotSignal();
 });
 
 sok.on('close', () => {
@@ -36,5 +37,19 @@ let ledState = 0;
 function blinkLed(){
 	++ledState;
 	led.write(ledState%2);
+}
+
+let cnt = 0;
+
+function gotSignal() {
+	if (cnt > 9) {
+		cnt = 0;
+		return
+	}
+	setTimeout(() => {
+		blinkLed();
+		cnt++;
+		gotSignal();
+	}, 250)
 }
 
