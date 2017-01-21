@@ -1,7 +1,7 @@
 'use strict'
 
 const mraa = require("mraa")
-const led = new mraa.Gpio(13)
+const led = new mraa.Gpio(7)
 
 led.dir(mraa.DIR_OUT); 
 let ledState = 0;
